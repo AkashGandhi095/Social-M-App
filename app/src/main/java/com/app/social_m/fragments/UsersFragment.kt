@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.social_m.R
+import com.app.social_m.adapter.UserAdapter
 import com.app.social_m.model.Users
 import com.app.social_m.retrofitUtils.RetrofitService
 import retrofit2.Call
@@ -20,6 +23,9 @@ class UsersFragment : Fragment() {
         private const val TAG = "UsersFragmentScreen"
     }
 
+    private lateinit var userListRecyclerView :RecyclerView
+    private lateinit var userAdapter :UserAdapter
+    private lateinit var userList: ArrayList<Users>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +38,15 @@ class UsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        userListRecyclerView = view.findViewById(R.id.users_RecyclerV)
+        userList = arrayListOf()
+        userAdapter = UserAdapter(userList)
+        userListRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = userAdapter
+
+        }
         fetchUsersList()
     }
 
@@ -41,7 +56,7 @@ class UsersFragment : Fragment() {
         RetrofitService.apiService.fetchUsers().enqueue(object : Callback<List<Users>> {
             override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
                 if (response.isSuccessful) {
-
+                    showUsers(response.body())
                 } else {
                     Log.d(TAG, "onResponse: errorResponse :${response.errorBody()} ")
                 }
@@ -52,6 +67,12 @@ class UsersFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun showUsers(users: List<Users>?) {
+        users?.let {
+            userAdapter.setUsersData(users)
+        }
     }
 
 
