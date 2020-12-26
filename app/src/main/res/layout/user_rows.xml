@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userProfile_ImgV"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/square" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/userName_txtV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/userProfile_ImgV"
+            app:layout_constraintTop_toTopOf="@+id/userProfile_ImgV"
+            tools:text="Peter Parker"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:drawableStart="@drawable/ic_outline_person_16"
+            android:drawablePadding="5dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/userEmail_txtV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/userProfile_ImgV"
+            app:layout_constraintTop_toBottomOf="@+id/userName_txtV"
+            tools:text="Julianne.OConner@kory.org"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:drawableStart="@drawable/ic_outline_email_24"
+            android:drawablePadding="5dp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/userWebsite_txtV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/userProfile_ImgV"
+            app:layout_constraintTop_toBottomOf="@+id/userEmail_txtV"
+            tools:text="spideyWorld.com"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:drawableStart="@drawable/ic_outline_web_16"
+            android:drawablePadding="5dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
