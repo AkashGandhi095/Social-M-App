@@ -1,12 +1,17 @@
 package com.app.social_m.fragments
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.constraintlayout.solver.widgets.ConstraintWidget.GONE
+import androidx.constraintlayout.widget.ConstraintSet.GONE
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -25,12 +30,12 @@ class UsersFragment : Fragment() , UserAdapter.OnAdapterClick {
     companion object {
         private const val TAG = "UsersFragmentScreen"
 
-        fun newInstance() = UsersFragment()
     }
 
     private lateinit var userListRecyclerView :RecyclerView
     private lateinit var userAdapter :UserAdapter
     private lateinit var userList: ArrayList<Users>
+    private lateinit var loadProgress :ProgressBar
 
 
     override fun onCreateView(
@@ -54,6 +59,7 @@ class UsersFragment : Fragment() , UserAdapter.OnAdapterClick {
             adapter = userAdapter
 
         }
+        loadProgress = view.findViewById(R.id.load_view)
         fetchUsersList()
     }
 
@@ -67,10 +73,13 @@ class UsersFragment : Fragment() , UserAdapter.OnAdapterClick {
                 } else {
                     Log.d(TAG, "onResponse: errorResponse :${response.errorBody()} ")
                 }
+                loadProgress.visibility = View.GONE
+
             }
 
             override fun onFailure(call: Call<List<Users>>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.localizedMessage}")
+                loadProgress.visibility = View.GONE
             }
 
         })
