@@ -27,13 +27,17 @@ data class Address(
     val street :String ,
     val suite :String ,
     val city :String ,
+
+    @SerializedName("zipcode")
     val zipCode :String ,
+
     val geo :Geo
 
 )
 
 data class Geo(
     val lat :String ,
+    @SerializedName("lng")
     val lon :String
 )
 

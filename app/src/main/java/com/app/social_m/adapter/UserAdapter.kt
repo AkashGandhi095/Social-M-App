@@ -11,7 +11,8 @@ import com.google.android.material.textview.MaterialTextView
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-class UserAdapter(private val userDataList :ArrayList<Users>) : RecyclerView.Adapter<UserAdapter.DataHolder>() {
+class UserAdapter(private val userDataList :ArrayList<Users> ,
+                  private val adapterClick: OnAdapterClick) : RecyclerView.Adapter<UserAdapter.DataHolder>() {
 
 
     fun setUsersData(userDataList: List<Users>) {
@@ -32,17 +33,25 @@ class UserAdapter(private val userDataList :ArrayList<Users>) : RecyclerView.Ada
 
     override fun getItemCount(): Int = userDataList.size
 
-    inner class DataHolder(itemView :View) : RecyclerView.ViewHolder(itemView) {
+    inner class DataHolder(itemView :View) : RecyclerView.ViewHolder(itemView) , View.OnClickListener {
         private val profileImageV :ShapeableImageView = itemView.findViewById(R.id.userProfile_ImgV)
         private val nameTextV :MaterialTextView = itemView.findViewById(R.id.userName_txtV)
         private val emailTextV :MaterialTextView = itemView.findViewById(R.id.userEmail_txtV)
         private val websiteTextV :MaterialTextView = itemView.findViewById(R.id.userWebsite_txtV)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bindDataToViews(user :Users) {
             profileImageV.setImageResource(generateRandomProfileImage())
             nameTextV.text = user.name
             emailTextV.text = user.email
             websiteTextV.text = user.website
+        }
+
+        override fun onClick(v: View?) {
+            adapterClick.onClick(userDataList[adapterPosition] , v)
         }
     }
 
@@ -55,5 +64,9 @@ class UserAdapter(private val userDataList :ArrayList<Users>) : RecyclerView.Ada
             4 ->  R.drawable.image_4
             else ->  R.drawable.image_5
         }
+    }
+
+    interface OnAdapterClick {
+        fun onClick(user: Users , view :View?)
     }
 }
